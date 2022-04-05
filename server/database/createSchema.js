@@ -20,7 +20,10 @@ db.exec(`CREATE TABLE IF NOT EXISTS users (
 
 // Seed my databaseJ
 if (deleteMode) {
-  db.run(`INSERT INTO users (username, password) VALUES ('Admin', '${hash}')`);
+  db.run(`INSERT INTO users (username, password) VALUES (?, ?)`, [
+    "Admin",
+    hash,
+  ]);
 }
 
 db.close();

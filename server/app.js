@@ -1,15 +1,16 @@
 import express from "express";
+import cors from "cors";
+import helmet from "helmet";
+import rateLimit from "express-rate-limit";
+import authRouter from "./routers/authRouter.js";
+
 const app = express();
 
 app.use(express.json());
 
-import cors from "cors";
 app.use(cors());
 
-import helmet from "helmet";
 app.use(helmet());
-
-import rateLimit from "express-rate-limit";
 
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
@@ -20,7 +21,6 @@ const authLimiter = rateLimit({
 
 //app.use("/auth", authLimiter);
 
-import authRouter from "./routers/authRouter.js";
 app.use(authRouter);
 
 const PORT = process.env.PORT || 3000;
