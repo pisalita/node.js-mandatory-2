@@ -1,32 +1,78 @@
 <script>
+  import { Router, Link, Route } from "svelte-navigator";
+  import Home from './Pages/Home.svelte';
+  import Shop from './Pages/Shop.svelte';
+  import Cart from './Pages/Cart.svelte';
+  import Login from './Pages/Login.svelte';
+  import Contact from './Pages/Contact.svelte';
+  import PrivateRoute from "./Components/PrivateRoute.svelte";
+
 </script>
 
 <main>
-  <nav>
-    <img src="" alt="" />
-    <ul>
-      <li>Home</li>
-      <li>Shop</li>
-      <li>Login</li>
-      <li>Cart</li>
-    </ul>
-  </nav>
+
+  <Router>
+    <nav>
+      <ul>
+        <li><img src="" alt="Logo" /></li>
+        <li><Link to="/">Home</Link></li>
+        <li><Link to="/shop">Shop</Link></li>
+        <li><Link to="/cart">Cart</Link></li>
+        <li><Link to="/contact">Contact</Link></li>
+        <li><Link to="/login">Login</Link></li>
+      </ul>
+    </nav>
+
+    <div>
+      <Route path="/">
+        <Home />
+      </Route>
+      <Route path="/shop">
+        <Shop />
+      </Route>
+      <Route path="/cart">
+        <Cart />
+      </Route>
+      <Route path="/login">
+        <Login />
+      </Route>
+      <PrivateRoute path="/contact" let:location>
+        <Contact />
+      </PrivateRoute>
+    </div>
+  </Router>
+
 </main>
 
 <style>
-  nav {
+ main {
+   min-height: 100vh;
+ }
+ nav {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
+    background-color: #1D1D1F;
   }
   ul {
     display: flex;
+    align-items: center;
+    justify-content: center;
     flex-direction: row;
     text-decoration: none;
     list-style-type: none;
+    width: 80%;
+    padding: 10px;
   }
   li {
+    color: white;
     padding: 10px;
+  }
+  li:first-child{
+    margin-right: auto;
+  }
+  li:last-child{
+    margin-left: auto;
   }
 </style>
