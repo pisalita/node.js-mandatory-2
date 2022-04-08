@@ -1,5 +1,6 @@
 <script>
   import { Router, Link, Route } from "svelte-navigator";
+  import { toasts, ToastContainer, FlatToast }  from "svelte-toasts";
   import Home from './Pages/Home.svelte';
   import Cart from './Pages/Cart.svelte';
   import Login from './Pages/Login.svelte';
@@ -30,7 +31,7 @@
           <li class="nav-item">
               <Link to="/" class="nav-anchors" on:click={ () => {
                   logout();
-                  //toasts.warning("youre now logged out");
+                  toasts.warning("logged out");
                   }}>Log out</Link>
           </li>
         {/if} 
@@ -52,6 +53,10 @@
       </PrivateRoute>
     </div>
   </Router>
+
+  <ToastContainer placement="bottom-right" let:data={data}>
+    <FlatToast {data} /> <!-- Provider template for your toasts -->
+  </ToastContainer>
 
 </main>
 

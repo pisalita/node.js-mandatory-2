@@ -1,5 +1,7 @@
 <script>
   import { user } from "../Components/stores";
+  import { toasts }  from "svelte-toasts";
+  import { navigate } from "svelte-navigator";
 	let submitted = false;
   let username = "";
   let password = "";
@@ -19,6 +21,8 @@
     const data = await res.json();
     if(res.ok){
       user.set(data);
+      toasts.success("logged in");
+      navigate("/");
     }
 	}
 </script>
