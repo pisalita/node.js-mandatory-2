@@ -1,54 +1,51 @@
 <script>
-	import {fly, fade } from 'svelte/transition';	
-	let hasError = false;
-	let isSuccessVisible = false;
+  import { user } from "../Components/stores";
 	let submitted = false;
+  let username = "";
+  let password = "";
 	
-	const errMessage = "All the fields are mandatory";		
-	
-	function handleSubmit(e) {
-		isSuccessVisible = true;
+	async function handleSubmit(e) {
 
-		setTimeout(function(){
-			isSuccessVisible = false;
-		}, 4000);
+		let res = await fetch('http://localhost:3000/auth/login', {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: "POST",
+      body: JSON.stringify({
+        username,
+        password,
+      })
+    })
+    const data = await res.json();
+    if(res.ok){
+      user.set(data);
+    }
 	}
 </script>
-
-{#if hasError == true}
-		<p class="error-alert">{errMessage}</p>
-{:else}
-	{#if isSuccessVisible}	
-		<p class="error-alert" transition:fade={{duration:150}}>Data updated successfully</p>
-	{/if}
-{/if}
 
 <div class="container">
 	<form id="surveyForm" class="mt-4" class:submitted on:submit|preventDefault={handleSubmit}>
 		<div class="form-group">
-			<input type="text" class="form-control" placeholder="First name" required>
+			<input bind:value={username} type="text" class="form-control" placeholder="Username" required>
 		</div>
 
 		<div class="form-group">
-			<input type="text" class="form-control" placeholder="Last name" required>
+			<input bind:value={password} type="text" class="form-control" placeholder="Password" required>
 		</div> 
 
-		<button class="btn btn-full" on:click={() => submitted = true}>Continue</button>
+		<button class="btn btn-full" on:click={() => submitted = true}>Login</button>
 	</form>
 </div>
 
-<link href="https://gist.githubusercontent.com/Ajax30/08899d40e16069cd517b9756dc900acc/raw/04e4f9997245df079fa8500690d1878311115b20/global.css" rel="stylesheet" crossorigin="anonymous">
-
 <style>
 	.container {
+    min-height: calc(100vh - 61px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 		max-width: 1200px;
 		margin: 0 auto;
-	}
-	
-	h2 {
-		margin-top: 0;
-	}
-	
+	}	
 	.form-group > *,
 	.btn-full {
 		width: 100%;
@@ -65,13 +62,5 @@
 
 	.submitted input:focus:invalid {
 		outline: 1px solid #c00;
-	}
-	
-	.error-alert {
-		border: 1px solid #c00 !important;
-		padding: 6px;
-		text-align: center;
-		color: #c00;
-		border-radius: 3px;
 	}
 </style>

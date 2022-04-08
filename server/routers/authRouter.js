@@ -8,6 +8,8 @@ router.post("/auth/login", async (req, res) => {
     req.body.username,
   ]);
 
+  console.log(req.body);
+
   const isSamePassword = await bcrypt.compare(
     req.body.password,
     user[0].password

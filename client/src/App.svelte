@@ -1,11 +1,15 @@
 <script>
   import { Router, Link, Route } from "svelte-navigator";
   import Home from './Pages/Home.svelte';
-  import Shop from './Pages/Shop.svelte';
   import Cart from './Pages/Cart.svelte';
   import Login from './Pages/Login.svelte';
   import Contact from './Pages/Contact.svelte';
   import PrivateRoute from "./Components/PrivateRoute.svelte";
+  import { user } from "./Components/stores";
+
+  export const logout = () => {
+    user.set(null);
+  }
 
 </script>
 
@@ -16,19 +20,26 @@
       <ul>
         <li><img src="" alt="Logo" /></li>
         <li><Link to="/">Home</Link></li>
-        <li><Link to="/shop">Shop</Link></li>
         <li><Link to="/cart">Cart</Link></li>
         <li><Link to="/contact">Contact</Link></li>
-        <li><Link to="/login">Login</Link></li>
+        {#if !$user}
+          <li class="nav-item">
+              <Link to="/login" class="nav-anchors">Log in</Link>
+          </li>
+        {:else}
+          <li class="nav-item">
+              <Link to="/" class="nav-anchors" on:click={ () => {
+                  logout();
+                  //toasts.warning("youre now logged out");
+                  }}>Log out</Link>
+          </li>
+        {/if} 
       </ul>
     </nav>
 
     <div>
       <Route path="/">
         <Home />
-      </Route>
-      <Route path="/shop">
-        <Shop />
       </Route>
       <Route path="/cart">
         <Cart />
