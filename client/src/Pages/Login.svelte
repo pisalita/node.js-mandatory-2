@@ -18,11 +18,18 @@
         password,
       })
     })
-    const data = await res.json();
+    
     if(res.ok){
-      user.set(data);
-      toasts.success("logged in");
-      navigate("/");
+      const data = await res.json();
+      console.log(data);
+      if(data.username){
+        user.set(data);
+        toasts.success("logged in");
+        navigate("/");
+      } 
+      if(data.error) {
+        toasts.error(data.error);
+      }
     }
 	}
 </script>

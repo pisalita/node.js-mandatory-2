@@ -4,11 +4,7 @@ import { db } from "../database/createConnection.js";
 import bcrypt from "bcrypt";
 
 router.post("/auth/login", async (req, res) => {
-  const user = await db.all("SELECT * FROM users WHERE username=(?);", [
-    req.body.username,
-  ]);
-
-  console.log(req.body);
+  const user = await db.all("SELECT * FROM users");
 
   const isSamePassword = await bcrypt.compare(
     req.body.password,
@@ -24,7 +20,7 @@ router.post("/auth/login", async (req, res) => {
     res.send({ id: user[0].id, username: user[0].username });
     return;
   }
-  res.send({ message: "user not found" });
+  res.send({ error: "wrong credentials" });
 });
 
 export default router;
