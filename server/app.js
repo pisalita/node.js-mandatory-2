@@ -3,6 +3,8 @@ import cors from "cors";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import authRouter from "./routers/authRouter.js";
+import contactRouter from "./routers/contactRouter.js";
+import session from "express-session";
 
 const app = express();
 
@@ -21,7 +23,17 @@ const authLimiter = rateLimit({
 
 //app.use("/auth", authLimiter);
 
+app.use(
+  session({
+    secret: "keyboard cat you should probably change this",
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false },
+  })
+);
+
 app.use(authRouter);
+app.use(contactRouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

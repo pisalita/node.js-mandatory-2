@@ -1,10 +1,15 @@
 <script>
+  import { cart } from "../Components/stores";
   export let label = "";
   export let imageUrl = "";
   export let price = "";
 
   const addItem = () => {
-    //add item to store for later use
+    $cart = [...$cart, {
+      label: label,
+      imageUrl: imageUrl,
+      price: price
+    }]
   }
 
 </script>
@@ -51,5 +56,8 @@
     background-color: green;
     border-radius: 10px;
     padding: 0px 8px 0px 8px;
+  }
+  span {
+    cursor: pointer;
   }
 </style>

@@ -18,6 +18,7 @@ router.post("/auth/login", async (req, res) => {
 
   if (isSameUsername && isSamePassword) {
     res.send({ id: user[0].id, username: user[0].username });
+    req.session.login = true;
     return;
   }
   res.send({ error: "wrong credentials" });
