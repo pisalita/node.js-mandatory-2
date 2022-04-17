@@ -1,21 +1,33 @@
 <script>
   import { cart } from "../Components/stores";
+  import { id } from "../Components/stores";
   import { toasts } from "svelte-toasts";
   export let addButton = true;
   export let label = "";
   export let imageUrl = "";
   export let price = 0;
+  export let item = null;
 
   const addItem = () => {
     $cart = [
       ...$cart,
       {
+        id: $id,
         label: label,
         imageUrl: imageUrl,
         price: price,
       },
     ];
     toasts.success("Item added to cart");
+    $id++;
+    console.log($cart);
+  };
+
+  const removeItem = () => {
+    $cart = $cart.filter((cartItem) => {
+      return item.id !== cartItem.id;
+    });
+    toasts.error("Item removed from cart");
   };
 </script>
 
@@ -27,6 +39,8 @@
     {"$" + price}
     {#if addButton}
       <span class="add" on:click={addItem}>Add</span>
+    {:else}
+      <span class="remove" on:click={removeItem}>Remove</span>
     {/if}
   </div>
 </div>
@@ -68,7 +82,7 @@
     padding: 0px 8px 0px 8px;
   }
   .item-container div .remove {
-    margin-left: 30px;
+    margin-left: 10px;
     background-color: red;
     border-radius: 10px;
     padding: 0px 8px 0px 8px;

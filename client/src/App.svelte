@@ -39,13 +39,13 @@
     </nav>
 
     <div>
-      <Route path="/">
+      <Route path="/" primary={false}>
         <Home />
       </Route>
-      <Route path="/cart">
+      <Route path="/cart" primary={false}>
         <Cart />
       </Route>
-      <Route path="/login">
+      <Route path="/login" primary={false}>
         <Login />
       </Route>
       <PrivateRoute path="/contact" let:location>
