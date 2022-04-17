@@ -21,7 +21,7 @@
 </div>
 
 <div class="items-container">
-  <div>total price: {totalPrice}</div>
+  <div>total price: ${totalPrice}</div>
 </div>
 
 <style>

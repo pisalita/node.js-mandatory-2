@@ -1,5 +1,6 @@
 <script>
   import { cart } from "../Components/stores";
+  import { toasts } from "svelte-toasts";
   export let addButton = true;
   export let label = "";
   export let imageUrl = "";
@@ -14,6 +15,7 @@
         price: price,
       },
     ];
+    toasts.success("Item added to cart");
   };
 </script>
 
