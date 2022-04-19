@@ -21,7 +21,7 @@ const authLimiter = rateLimit({
   legacyHeaders: false, // Disable the `X-RateLimit-*` headers
 });
 
-//app.use("/auth", authLimiter);
+app.use("/auth", authLimiter);
 
 app.use(
   session({
