@@ -2,11 +2,16 @@
   import { cart } from "../Components/stores";
   import Item from "../Components/Item.svelte";
 
-  let totalPrice = 0;
+  $: $cart, calcTotalPrice();
 
-  $cart.forEach((cartItem) => {
-    totalPrice += Number(cartItem.price);
-  });
+  let totalPrice;
+
+  const calcTotalPrice = () => {
+    totalPrice = 0;
+    $cart.forEach((cartItem) => {
+      totalPrice += Number(cartItem.price);
+    });
+  };
 </script>
 
 <div class="items-container">
